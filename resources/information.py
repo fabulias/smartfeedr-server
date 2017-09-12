@@ -1,45 +1,32 @@
 from flask_restful import Resource, reqparse
 import datetime
 import json
+from http import HTTPStatus
 from common.utils import Utils
-
-def convert_to_datetime(value):
-    print ("type(value) => ",type(value))
-    print ("value => ", value)
-    value = datetime.datetime.strptime(value,'%Y-%m-%dT%H:%M:%S')
-    print ("value",type(value))
-    return value
-
-def date_handler(x):
-    if isinstance(x, datetime.datetime):
-        return x.isoformat()
-    raise TypeError("Unknown type")
-#value =>  2017-03-01T10:10:10
-
-#lambda x: datetime.strptime(x,'%Y-%m-%dT%H:%M:%S')
-
-def second_parse_request(request_params):
-    for value in request_params:
-        print ("value => ", request_params[value])
+from common.database import *
 
 class Information(Resource):
     def post(self):
         data=None
         parser = reqparse.RequestParser()
         parser.add_argument('ration1', type=float, location='json', required=True, help='Ration1 cannot be converted')
-        parser.add_argument('date1', type=convert_to_datetime, location='json', required=True, help='Date1 cannot be converted')
+        parser.add_argument('date1', type=Utils.convert_to_datetime, location='json', required=True, help='Date1 cannot be converted')
         parser.add_argument('ration2', type=float,location='json', help='Ration2 cannot be converted')
-        parser.add_argument('date2', type=convert_to_datetime,location='json', help='Date2 cannot be converted')
+        parser.add_argument('date2', type=Utils.convert_to_datetime,location='json', help='Date2 cannot be converted')
         parser.add_argument('ration3', type=float,location='json', help='Ration3 cannot be converted')
-        parser.add_argument('date3', type=convert_to_datetime,location='json', help='Date3 cannot be converted')
+        parser.add_argument('date3', type=Utils.convert_to_datetime,location='json', help='Date3 cannot be converted')
         parser.add_argument('ration4', type=float,location='json', help='Ration4 cannot be converted')
-        parser.add_argument('date4', type=convert_to_datetime,location='json', help='Date4 cannot be converted')
+        parser.add_argument('date4', type=Utils.convert_to_datetime,location='json', help='Date4 cannot be converted')
         request_params = parser.parse_args()
-        print ("here ->  ", request_params['ration1'])
-        second_parse_request(request_params)
-        print ("[request_params]",request_params)
+        #print ("[request_params]",request_params)
+        if (not(Utils.second_parse_request(request_params))):
+            response = {
+                'message':'Error sending params, the parameters are in pairs'
+            }
+            return response, HTTPStatus.NOT_ACCEPTABLE
+        #Insert request data in database
+        insert_data(request_params)
         response = {
-            'data':json.dumps(request_params, default=date_handler),
-            'status':200
+            'data':json.dumps(request_params, default=Utils.date_handler)
         }
-        return response
+        return response, HTTPStatus.OK
