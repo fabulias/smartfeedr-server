@@ -3,7 +3,6 @@ import sqlite3
 DBFILE = "demo.db"
 gConn = None
 
-
 def init_connection():
     global gConn
     if gConn == None:
@@ -36,8 +35,20 @@ def create_table(commit=True):
 
 def insert_data(data):
     print ("[DATA] => ", data)
+    print ("r3, ",data["ration3"])
+    print ("d3, ",data["date3"])
+    data["ration3"]=0
+    data["date3"]=""
+    data["ration4"]=0
+    data["date4"]=""
+    print ("r3, ",data["ration3"])
+    print ("d3, ",data["date3"])
+    print ("r4, ",data["ration4"])
+    print ("d4, ",data["date4"])
+
     #cur.execute("INSERT INTO foo(bar) VALUES (?)",('25/06/2003',))
     conn = get_connection()
+    print ("conn -> ", conn)
     INSERT_CMD = "INSERT INTO schedule(ration1,date1,ration2,date2,ration3,date3,ration4,date4) VALUES (?,?,?,?,?,?,?,?)"
     do_commit = True
     conn.execute(INSERT_CMD, data)
