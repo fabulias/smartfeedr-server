@@ -38,25 +38,25 @@ def parse_request(request_params):
         return True
 
 def create_schedule(data):
-  my_cron = CronTab(user='fabulias')
+  my_cron = CronTab(user='pi')
   # Date1
   date_h = data['date1'].hour
   date_m = data['date1'].minute
-  job = my_cron.new(command='python '+os.getcwd()+'/main.py '+ str(data['ration1']))
+  job = my_cron.new(command='python '+'/home/pi/Documents/smartfeedr-collector/motor.py '+ str(data['ration1']))
   job.hour.on(date_h)
   job.minute.on(date_m)
   my_cron.write()
   # Date2
   date_h = data['date2'].hour
   date_m = data['date2'].minute
-  job = my_cron.new(command='python '+os.getcwd()+'/main.py '+ str(data['ration2']))
+  job = my_cron.new(command='python '+'/home/pi/Documents/smartfeedr-collector/motor.py '+ str(data['ration2']))
   job.hour.on(date_h)
   job.minute.on(date_m)
   my_cron.write()
   # Date3
   date_h = data['date3'].hour
   date_m = data['date3'].minute
-  job = my_cron.new(command='python '+os.getcwd()+'/main.py '+ str(data['ration3']))
+  job = my_cron.new(command='python '+'/home/pi/Documents/smartfeedr-collector/motor.py '+ str(data['ration3']))
   job.hour.on(date_h)
   job.minute.on(date_m)
   my_cron.write()
@@ -64,7 +64,7 @@ def create_schedule(data):
   date_h = data['date4'].hour
   date_m = data['date4'].minute
   date_s = data['date4'].second
-  job = my_cron.new(command='python '+os.getcwd()+'/main.py '+ str(data['ration4']))
+  job = my_cron.new(command='python ''/home/pi/Documents/smartfeedr-collector/motor.py '+ str(data['ration4']))
   job.hour.on(date_h)
   job.minute.on(date_m)
   my_cron.write()
