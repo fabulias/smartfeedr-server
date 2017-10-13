@@ -1,7 +1,6 @@
 from flask_restful import Resource, reqparse
 import datetime
 import json
-from http import HTTPStatus
 from common.utils import Utils
 from common.database import *
 
@@ -23,10 +22,10 @@ class Information(Resource):
             response = {
                 'message':'Error sending params, the parameters are in pairs'
             }
-            return response, HTTPStatus.NOT_ACCEPTABLE
+            return response, 406
         #Insert request data in database
         insert_data(request_params)
         response = {
             'data':json.dumps(request_params, default=Utils.date_handler)
         }
-        return response, HTTPStatus.OK
+        return response, 200
