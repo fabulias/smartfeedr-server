@@ -2,7 +2,6 @@ from flask_restful import Resource, reqparse
 import datetime
 import json
 from common.utils import Utils
-from common.database import *
 
 class Information(Resource):
     def post(self):
