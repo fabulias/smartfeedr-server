@@ -13,8 +13,6 @@ class Power(Resource):
         print (request_params['state'])
         print ("type ", type(request_params['state']))
         if request_params['state']:
-            print ("YEAH its codeeee")
-            os.environ["STATE"] = "ON"
-            status = subprocess.call("python ../smartfeedr-collector/ultrasonic.py", shell=True)
+            status = subprocess.call("bash ../smartfeedr-collector/asd.sh", shell=True)
         else:
-            os.environ['STATE'] = "OFF"
+            print ("chaoooo")
