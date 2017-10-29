@@ -45,7 +45,6 @@ class Power(Resource):
                 line = line.decode("utf-8")
                 print ("[Assigned process]", line)
                 pid = int(line.split(None, 1)[0])
-                os.kill(pid, signal.SIGKILL)
                 response = {
                     'data':line
                 }
