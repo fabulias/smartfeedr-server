@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 import datetime
 import json
 from common.utils import Utils
+import os
 
 class Information(Resource):
     def post(self):
@@ -22,9 +23,10 @@ class Information(Resource):
                 'message':'Error sending params, the parameters are in pairs'
             }
             return response, 406
+        os.system("crontab -r")
         #Insert request data in database
-        insert_data(request_params)
+        Utils.create_schedule(request_params)
         response = {
-            'data':json.dumps(request_params, default=Utils.date_handler)
+            'data':''
         }
         return response, 200

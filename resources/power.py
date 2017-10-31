@@ -10,6 +10,11 @@ class Power(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('state', type=inputs.boolean, help="Bad input state!!!")
         request_params = parser.parse_args()
+        if request_params['state']==None:
+            response = {
+                'data':''
+            }
+            return response, 406
         if request_params['state']:
             status = subprocess.Popen("python ../smartfeedr-collector/test.py", shell=True)
             response = {
