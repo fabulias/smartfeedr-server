@@ -25,8 +25,14 @@ class Information(Resource):
             return response, 406
         os.system("crontab -r")
         #Insert request data in database
-        Utils.create_schedule(request_params)
+        try:
+            Utils.create_schedule(request_params)
+        except:
+             response = {
+                'data':"Internal server error with crontab"
+             }
+             return response, 500
         response = {
-            'data':''
+            'data':'Schedule created with success'
         }
         return response, 200
