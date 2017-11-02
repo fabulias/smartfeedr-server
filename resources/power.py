@@ -16,20 +16,23 @@ class Power(Resource):
             }
             return response, 406
         if request_params['state']:
-            status = subprocess.Popen("python ../smartfeedr-collector/test.py", shell=True)
+            status = subprocess.Popen("python ../smartfeedr-collector/ultrasonic.py", shell=True)
             response = {
                 'data':''
             }
             return response, 200
         else:
-            p = subprocess.Popen(['ps', '-A'], stdout=subprocess.PIPE)
+            p = subprocess.Popen(['ps', '-f'], stdout=subprocess.PIPE)
             out, err = p.communicate()
+            print (out)
             for line in out.splitlines():
-                file_=b'test.py'
+                print (line)
+                file_=b'ultrasonic.py'
                 if file_ in line:
                     line = line.decode("utf-8")
                     print ("[Process to kill]", line)
-                    pid = int(line.split(None, 1)[0])
+                    print ("-> ", line.split(None,1)[1])
+                    pid = int(line.split(None, 1)[1])
                     os.kill(pid, signal.SIGKILL)
                     response = {
                         'data':line
@@ -45,7 +48,7 @@ class Power(Resource):
         p = subprocess.Popen(['ps', '-A'], stdout=subprocess.PIPE)
         out, err = p.communicate()
         for line in out.splitlines():
-            file_=b'test.py'
+            file_=b'ultrasonic.py'
             if file_ in line:
                 line = line.decode("utf-8")
                 print ("[Assigned process]", line)
