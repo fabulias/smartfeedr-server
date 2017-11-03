@@ -32,7 +32,7 @@ class Power(Resource):
                     line = line.decode("utf-8")
                     print ("[Process to kill]", line)
                     pid = int(line.split(None, 1)[1].split()[0])
-                    os.kill(pid, signal.SIGKILL)
+                    subprocess.Popen("pkill -f ultrasonic.py", shell=True)
                     response = {
                         'data':line
                     }
