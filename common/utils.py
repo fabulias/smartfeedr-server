@@ -36,7 +36,7 @@ class Utils:
         return True
 
     def create_schedule(data):
-        user_ = 'fabulias'
+        user_ = 'pi'
         my_cron = CronTab(user=user_)
         # Date1
         date_h = data['date1'].hour
