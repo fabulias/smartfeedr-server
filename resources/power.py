@@ -22,17 +22,16 @@ class Power(Resource):
             }
             return response, 200
         else:
+            print ("HOLA")
             p = subprocess.Popen(['ps', '-f'], stdout=subprocess.PIPE)
             out, err = p.communicate()
-            print (out)
             for line in out.splitlines():
-                print (line)
                 file_=b'ultrasonic.py'
+                print (line)
                 if file_ in line:
                     line = line.decode("utf-8")
                     print ("[Process to kill]", line)
-                    print ("-> ", line.split(None,1)[1])
-                    pid = int(line.split(None, 1)[1])
+                    pid = int(line.split(None, 1)[1].split()[0])
                     os.kill(pid, signal.SIGKILL)
                     response = {
                         'data':line
@@ -45,14 +44,14 @@ class Power(Resource):
 
 
     def get(self):
-        p = subprocess.Popen(['ps', '-A'], stdout=subprocess.PIPE)
+        p = subprocess.Popen(['ps', '-f'], stdout=subprocess.PIPE)
         out, err = p.communicate()
         for line in out.splitlines():
             file_=b'ultrasonic.py'
             if file_ in line:
                 line = line.decode("utf-8")
                 print ("[Assigned process]", line)
-                pid = int(line.split(None, 1)[0])
+                pid = int(line.split(None, 1)[1].split()[0])
                 response = {
                     'data':line
                 }
