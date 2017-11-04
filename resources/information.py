@@ -8,8 +8,7 @@ import os
 class Information(Resource):
     def post(self):
         input_data = request.get_json(force=True)
-        print (input_data)
-        if not Utils.first_parser(input_data):
+        if (not(Utils.first_parser(input_data))):
             response = {
                 'message':'Error sending params, the parameters are in pairs'
             }
