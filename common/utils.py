@@ -20,6 +20,19 @@ class Utils:
             return False
         return True
 
+    def first_parser(input_data):
+        try:
+            input_data['ration1'] = float(input_data['ration1'])
+            input_data['date1'] = datetime.strptime(input_data['date1'],'%H:%M')
+            input_data['ration2'] = float(input_data['ration2'])
+            input_data['date2'] = datetime.strptime(input_data['date2'],'%H:%M')
+            input_data['ration3'] = float(input_data['ration3'])
+            input_data['date3'] = datetime.strptime(input_data['date3'],'%H:%M')
+            input_data['ration4'] = float(input_data['ration4'])
+            input_data['date4'] = datetime.strptime(input_data['date4'],'%H:%M')
+        except:
+            return False
+        return True
     def second_parse_request(request_params):
         if(not(Utils.and_params(request_params['ration2'],request_params['date2']))):
             request_params['ration2']=0
