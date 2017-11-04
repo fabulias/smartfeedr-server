@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask import request
 import datetime
 import json
 from common.utils import Utils
@@ -6,6 +7,7 @@ import os
 
 class Information(Resource):
     def post(self):
+        input_data = request.get_json(force=True)
         data=None
         parser = reqparse.RequestParser()
         parser.add_argument('ration1', type=float, location='json', required=True, help='Ration1 cannot be converted')
