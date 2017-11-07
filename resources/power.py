@@ -2,6 +2,8 @@ from flask_restful import Resource, reqparse
 from flask_restful import inputs
 import os
 import subprocess, signal
+import json
+import flask
 
 class Power(Resource):
     """docstring for Power."""
@@ -22,12 +24,10 @@ class Power(Resource):
             }
             return response, 200
         else:
-            print ("HOLA")
             p = subprocess.Popen(['ps', '-f'], stdout=subprocess.PIPE)
             out, err = p.communicate()
             for line in out.splitlines():
                 file_=b'ultrasonic.py'
-                print (line)
                 if file_ in line:
                     line = line.decode("utf-8")
                     print ("[Process to kill]", line)
@@ -40,7 +40,7 @@ class Power(Resource):
             response = {
                 'data':''
             }
-            return response, 404
+            return response, 204
 
 
     def get(self):
@@ -57,6 +57,7 @@ class Power(Resource):
                 }
                 return response, 200
         response = {
-            'data':''
+            'data':'i'
         }
-        return response, 404
+        print ("HARAAA")
+        return flask.jsonify(response), 204
