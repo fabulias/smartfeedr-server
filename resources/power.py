@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from flask_restful import inputs
+from flask import request
 import os
 import subprocess, signal
 import json
@@ -11,13 +12,14 @@ class Power(Resource):
         data=None
         parser = reqparse.RequestParser()
         parser.add_argument('state', type=inputs.boolean, help="Bad input state!!!")
+        input_data = request.get_json(force=True)
         request_params = parser.parse_args()
-        if request_params['state']==None:
+        if input_data['state']==None:
             response = {
                 'data':''
             }
             return response, 406
-        if request_params['state']:
+        if input_data['state']:
             status = subprocess.Popen("python ../smartfeedr-collector/ultrasonic.py", shell=True)
             response = {
                 'data':''
