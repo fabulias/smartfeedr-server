@@ -19,7 +19,7 @@ class Information(Resource):
                 'message':'Error sending params, the parameters are in pairs'
             }
             return response, 406
-        
+
         os.system("crontab -r")
         try:
             Utils.create_schedule(input_data)
@@ -32,3 +32,15 @@ class Information(Resource):
             'data':'Schedule created with success'
         }
         return response, 200
+
+    def delete(self):
+        state = os.system("crontab -r")
+        if state != 256:
+            response = {
+                'data':'Schedule deleted with exists'
+            }
+            return response, 200
+        response = {
+            'data':'Schedule not exists'
+        }
+        return response, 204
