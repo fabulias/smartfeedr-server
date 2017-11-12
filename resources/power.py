@@ -59,7 +59,6 @@ class Power(Resource):
                 }
                 return response, 200
         response = {
-            'data':'i'
+            'data':'Process running not exists'
         }
-        print ("HARAAA")
-        return flask.jsonify(response), 204
+        return response, 204
