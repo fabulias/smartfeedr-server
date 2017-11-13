@@ -38,7 +38,7 @@ class Power(Resource):
                     response = {
                         'data':line
                     }
-                    return response, 200
+                    return response, 202
             response = {
                 'data':''
             }
